@@ -1,0 +1,37 @@
+{
+  "name": "vue-ejs",
+  "version": "1.0.0",
+  "description": "vue-ejs",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomatedev/vue-ejs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tomatedev/vue-ejs/issues"
+  },
+  "homepage": "https://github.com/tomatedev/vue-ejs#readme",
+  "devDependencies": {
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mysql": "^2.17.1",
+    "nodemon": "^1.19.2",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0"
+  },
+  "dependencies": {
+    "axios": "^0.19.0",
+    "concurrently": "^4.1.2",
+    "cookie-parser": "^1.4.4",
+    "ejs": "^2.7.1",
+    "multer": "^1.4.2",
+    "validator": "^11.1.0"
+  }
+}

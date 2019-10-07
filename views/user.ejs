@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Users</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+<%- include('layouts/header'); -%>
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">First Name</th>
+              <th scope="col">Last Name</th>
+              <th scope="col">Email</th>
+            </tr>
+          </thead>
+          <tbody id="table-body"></tbody>
+    </table>
+</div>
+
+</body>
+</html>
+<script>
+$(function() {
+    all();
+    function all(){
+        $.ajax({
+            type: "GET",
+            url: "/api/users",
+            dataType: 'json',
+            headers: {
+                "Authorization": "<%= token %>"
+            },
+            data: '{ "comment" }',
+            success: function (data){
+                if(data.code==200){
+                    var num = data.data.length;
+                    var html = '';
+                    for(var i=0;i<num;i++){
+                        html += '<tr><td>'+data.data[i]['id']+'</td><td>'+data.data[i]['firstname']+'</td><td>'+data.data[i]['lastname']+'</td><td>'+data.data[i]['email']+'</td></tr>';
+                    }
+                    $('#table-body').html(html);
+                }else{
+                    console.log()
+                    var html = '';
+                    html = '<tr><td>คุณไม่มีสิทธิ์เข้าถึงข้อมูล</td><td>1</td><td>1</td><td>1</td></tr>';
+                    $('#table-body').html(html);
+                }
+            },
+            error: function(){
+                var html = '';
+                html = '<tr><td>คุณไม่มีสิทธิ์เข้าถึงข้อมูล</td><td>1</td><td>1</td><td>1</td></tr>';
+                $('#table-body').html(html);
+            }
+        });
+    }
+});
+</script>
