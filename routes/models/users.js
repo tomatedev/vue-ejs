@@ -2,6 +2,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const multer = require('multer');
+var session = require('express-session');
 
 const router  = express.Router();
 
@@ -26,8 +27,7 @@ router.put('/update/:id', passport.authenticate('jwt', { session: false}), (req,
 });
 
 
-router.get('/',  passport.authenticate('jwt', { session: false }), (req, res) => {
-    console.log('xx');
+router.get('/',  passport.authenticate('jwt', { session: false}), (req, res) => {
     db.query("SELECT * FROM users LIMIT 100", 
     function (err, result) {
         if (err) throw err;
@@ -135,6 +135,12 @@ router.post('/login', (req, res) => {
             keys.secretOrKey,
             { expiresIn: 3600 }, 
             (err, token) => {
+
+            let sess = req.session;
+            sess.email = user.email;
+            sess._id = user.id;
+            sess.token = 'Bearer ' + token;
+
             res.json({
                 success: true,
                 token: 'Bearer ' + token
@@ -143,8 +149,21 @@ router.post('/login', (req, res) => {
     })
 });
 
+
+router.post('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if(err) {
+            return console.log(err);
+        }
+
+        res.status(200).json({
+            code: res.statusCode,
+            message: 'Logout',
+        });
+    });
+});
+
 router.get('/current', passport.authenticate('jwt', { session: false}), (req, res) => {
-    console.log('s');
     var sql = "SELECT * FROM Users WHERE id='"+req.user.id+"'";
     db.query(sql, 
     function (err, user, fields) {

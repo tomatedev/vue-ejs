@@ -4,24 +4,20 @@
   <title>Login</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
 </head>
 <body>
 <%- include('layouts/header'); -%>    
 <div class="container">
-        <h2>Login</h2>
-    <form action="/action_page.php">
+        <h2>Login   {{ message }}</h2>
+    <form id="form"  method="POST">
         <div class="form-group">
           <label for="email">Email:</label>
           <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
         </div>
         <div class="form-group">
           <label for="pwd">Password:</label>
-          <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd">
+          <input type="password" class="form-control" id="password" placeholder="Enter password" name="password">
         </div>
         <div class="form-group form-check">
           <label class="form-check-label">
@@ -31,17 +27,44 @@
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
 </div>
-
+<!-- <div id="app">
+  {{ message }}
+</div> -->
 </body>
 </html>
 <script>
 $(function() {
-    all();
-    function all(){
 
-        // setCookie('test','1','1');
-        document.cookie = "token=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZmlyc3RuYW1lIjoibml0dGF5YSIsImxhc3RuYW1lIjoidGhhZW5ndGhvbmciLCJlbWFpbCI6Im1heTJtZWR1c2FAZ21haWwuY29tIiwiaWF0IjoxNTcwMzYzNDEyLCJleHAiOjE1NzAzNjcwMTJ9.uQ_ZpfqlLutCtSdRgrXiZf5_e0cE2DouryizYM1dU40";
-        //$.cookie("example", "foo", { expires: 7 });
+    $('form#form').submit(function(e) {
+    e.preventDefault();
+
+    var formData = $(this).serialize();
+        $.post("/api/users/login",
+            formData, function(data){  
+              console.log(data.token);
+              document.cookie = 'token='+data.token+'';
+              window.localStorage.setItem('token', data.token);
+              // setInterval(function(){ reload_auth() }, 1000);
+              window.location.href = '/user';
+            // if(data.code==200){
+            //     alert('success');
+            // }
+        });
+
+
+    });
+
+    function reload_auth(){
+      window.location.href = '/user';
     }
+
+    
 });
+
+var app = new Vue({
+  el: '.container',
+  data: {
+    message: 'Hello Vue!'
+  }
+})
 </script>

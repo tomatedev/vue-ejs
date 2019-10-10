@@ -1,3 +1,7 @@
+<link rel="stylesheet" href="../../css/bootstrap.min.css">
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/bootstrap.min.js"></script>
+<script src="../../js/vue.js"></script>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <!-- Brand/logo -->
         <a class="navbar-brand" href="/">Logo</a>
@@ -26,8 +30,17 @@
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="#">Profile</a>
                             <a class="dropdown-item" href="#">Link 2</a>
-                            <a class="dropdown-item" href="#">Logout</a>
+                            <a class="dropdown-item" href="#" onclick="logout()">Logout</a>
                         </div>
                 </li>
         </ul>
 </nav>
+<script>
+function logout(){
+  $.post( "/api/users/logout", function( data ) {
+      if(data.code == 200){
+          window.location.href = '/';
+      }
+  });
+}
+</script>
