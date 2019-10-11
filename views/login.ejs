@@ -9,7 +9,7 @@
 <body>
 <%- include('layouts/header'); -%>    
 <div class="container">
-        <h2>Login   {{ message }}</h2>
+        <h2>Login</h2>
     <form id="form"  method="POST">
         <div class="form-group">
           <label for="email">Email:</label>
@@ -44,27 +44,19 @@ $(function() {
               console.log(data.token);
               document.cookie = 'token='+data.token+'';
               window.localStorage.setItem('token', data.token);
-              // setInterval(function(){ reload_auth() }, 1000);
               window.location.href = '/user';
-            // if(data.code==200){
-            //     alert('success');
-            // }
         });
-
-
     });
 
     function reload_auth(){
       window.location.href = '/user';
     }
-
-    
 });
 
 var app = new Vue({
   el: '.container',
   data: {
-    message: 'Hello Vue!'
+    message: 'ล็อคอิน'
   }
 })
 </script>

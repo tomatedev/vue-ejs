@@ -5,8 +5,8 @@ const passport = require('passport');
 const path = require('path');
 const session = require('express-session');
 
-const users = require('./routes/models/users'); 
-const viewLanding = require('./routes/controllers/index'); 
+const users = require('./services/users'); 
+const viewLanding = require('./controllers/index'); 
 
 const app = express()
 app.use(bodyParser.urlencoded());
